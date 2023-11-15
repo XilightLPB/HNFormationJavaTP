@@ -11,6 +11,7 @@ public class Client {
 		this._firstName = firstName;
 		this._name = name;
 		this._clientNumber = _clientCount+1;
+		_clientCount +=1;
 	}
 	
 	public String getName() {
