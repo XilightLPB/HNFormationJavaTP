@@ -6,13 +6,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/erwan/Downloads/jackson-databind-2.16.0-rc1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/erwan/Desktop/HNFormations/Java/HNFormationJavaTP/jackson-databind-2.16.0-rc1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/erwan/Desktop/HNFormations/Java/HNFormationJavaTP/jackson-core-2.16.0-rc1-javadoc.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path=".classpath"/>
+	<classpathentry kind="lib" path="C:/Users/erwan/Desktop/HNFormations/Java/HNFormationJavaTP/EMMBank/librairies/jackson-core-2.16.0-rc1-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/erwan/Desktop/HNFormations/Java/HNFormationJavaTP/EMMBank/librairies/jackson-databind-2.16.0-rc1-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
