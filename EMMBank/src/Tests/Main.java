@@ -8,6 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import com.fasterxml.jackson.databind;
+
 import components.Client;
 import components.Credit;
 import components.Account;
@@ -20,7 +27,8 @@ import components.Flow;
 
 public class Main {
 	
-	public static void main(String[] args) {
+	
+	public static void main(String[] args) throws IOException {
 		//1.1.2 Creation of Main class for tests
 		int HowManyClients = 5;
 		ArrayList<Client> ClientsList = CreateClientsList(HowManyClients);
@@ -43,6 +51,10 @@ public class Main {
 		//1.3.5 Update accounts
 		updateAccounts(hashAccount,FlowsList);
 		displaySortedHash(hashAccount);
+		
+		//2.1 JSON file of flows
+		final String path = "";
+		FlowsList = generateFlowsFromJSON(path);
 		
 	}
 	
@@ -161,5 +173,20 @@ public class Main {
 		return hashAccount;
 	}
 	
+	
+	//2.1 JSON file to flows
+	private static ArrayList<Flow> generateFlowsFromJSON(String path) throws IOException {
+
+		// Get JSON file from path
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		String json = new String(encoded, StandardCharsets.UTF_8);
+		
+		//Trying to fill the flow array from it
+		ArrayList <Flow> res = new ArrayList<Flow>();
+		
+		
+		
+		return res;
+	}
 
 }
