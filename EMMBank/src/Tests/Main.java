@@ -42,7 +42,7 @@ public class Main {
 		
 		//1.3.1 Creation of Hashtable
 		HashMap<Integer, Account> hashAccount = generateHashAccount(AccountsList);
-		displaySortedHash(hashAccount);
+		//displaySortedHash(hashAccount);
 		
 		
 		//1.3.4 Creation of the flow array
@@ -51,11 +51,11 @@ public class Main {
 		
 		//1.3.5 Update accounts
 		updateAccounts(hashAccount,FlowsList);
-		displaySortedHash(hashAccount);
+		//displaySortedHash(hashAccount);
 		
 		//2.1 JSON file of flows
-		final String path = "";
-		FlowsList = generateFlowsFromJSON(path);
+		final String path = "../tests.json";
+		//FlowsList = generateFlowsFromJSON(path);
 		
 	}
 	
@@ -184,6 +184,7 @@ public class Main {
 		
 		//Trying to fill the flow array from it
 		ArrayList <Flow> res = new ArrayList<Flow>();
+		System.out.print(json);
 		
 		
 		
