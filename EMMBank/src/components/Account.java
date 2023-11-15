@@ -37,7 +37,29 @@ public class Account {
 	//here I will make modification later
 	public void setBalance(Flow flow) {
 		double Amount = flow.getAmount();
+		
+		if (flow instanceof Credit) 
+		{
 		this.balance += Amount;
+		}
+		
+		else if (flow instanceof Debit) {
+			this.balance -= Amount;
+		}
+		else if (flow instanceof Transfert) 
+		{
+			
+			if (flow.getTargetAccountNumber() == this.getAccountNumber())
+			{
+				this.balance += Amount;
+			}
+			
+			else if (((Transfert) flow).getSourceAccount() == this.getAccountNumber()) 
+			{
+				this.balance -= Amount;
+			}
+		}
+			
 		
 	}
 	

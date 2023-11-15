@@ -4,7 +4,7 @@ package components;
 public class Transfert extends Flow{
 
 	private int _SourceAccountNumber;
-	protected Transfert(String comment, double d, int targetAccountNumber, int SourceAccountNumber) {
+	public Transfert(String comment, double d, int targetAccountNumber, int SourceAccountNumber) {
 		super(comment, d, targetAccountNumber);
 		_SourceAccountNumber = SourceAccountNumber;
 		

@@ -3,7 +3,7 @@ package components;
 
 public class Debit extends Flow {
 
-	protected Debit(String comment, double d, int targetAccountNumber) {
+	public Debit(String comment, double d, int targetAccountNumber) {
 		super(comment, d, targetAccountNumber);
 		
 	}

@@ -12,7 +12,7 @@ public abstract class Flow {
 	private boolean _effect = false;
 	private LocalDate _date;
 	
-	protected Flow(String comment, double d, int targetAccountNumber) {
+	public Flow(String comment, double d, int targetAccountNumber) {
 		_comment = comment;
 		_amount = d;
 		_targetAccountNumber = targetAccountNumber;

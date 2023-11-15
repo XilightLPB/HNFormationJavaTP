@@ -3,7 +3,7 @@ package components;
 
 public class Credit extends Flow {
 
-	protected Credit(String comment, double d, int targetAccountNumber) {
+	public Credit(String comment, double d, int targetAccountNumber) {
 		super(comment, d, targetAccountNumber);
 		
 	}

@@ -9,9 +9,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import components.Client;
+import components.Credit;
 import components.Account;
 import components.SavingsAccount;
+import components.Transfert;
 import components.CurrentAccount;
+import components.Debit;
+import components.Flow;
 
 
 public class Main {
@@ -29,6 +33,17 @@ public class Main {
 		
 		//1.3.1 Creation of Hashtable
 		HashMap<Integer, Account> hashAccount = generateHashAccount(AccountsList);
+		displaySortedHash(hashAccount);
+		
+		
+		//1.3.4 Creation of the flow array
+		ArrayList<Flow> FlowsList = new ArrayList<Flow>();
+		FlowsList = LoadFlowsList(AccountsList); 
+		
+		//1.3.5 Update accounts
+		updateAccounts(hashAccount,FlowsList);
+		displaySortedHash(hashAccount);
+		
 	}
 	
 	
@@ -36,28 +51,35 @@ public class Main {
 	private static ArrayList<Client> CreateClientsList(int HowMany){
 		ArrayList<Client> res = new ArrayList<Client>();
 		
-		for (int i = 0; i<HowMany; i++) {
+		for (int i = 0; i<HowMany; i++) 
+		{
 			res.add(new Client("name" + i, "firstname" + i));
 		}
+		
 		return res;
 	}
 	
 	
-	private static void DisplayClients(ArrayList<Client> ClientsList) {
+	private static void DisplayClients(ArrayList<Client> ClientsList) 
+	{
 		ClientsList.forEach(System.out::println);
 	}
 	
 	//1.2.3 Creation of the tablea account
 	private static ArrayList<Account> generateAccounts(ArrayList<Client> ClientsList) {
 		ArrayList<Account> AccountsList = new ArrayList<>();
-		for (Client client : ClientsList) {
+		
+		for (Client client : ClientsList) 
+		{
 			AccountsList.add(new SavingsAccount("Saving account client" + client.getClientNumber(), client));
 			AccountsList.add(new CurrentAccount("Current account client" + client.getClientNumber(), client));
 		}
+		
 		return AccountsList;
 	}
 	
-	private static void displayAccounts(ArrayList<Account> AccountsList) {
+	private static void displayAccounts(ArrayList<Account> AccountsList) 
+	{
 		AccountsList.forEach(System.out::println);
 	}
 	
@@ -66,7 +88,8 @@ public class Main {
 	private static HashMap<Integer, Account> generateHashAccount(ArrayList<Account> AccountsList) {
 		HashMap<Integer, Account> hashtable = new HashMap<>();
 
-		for (Account account : AccountsList) {
+		for (Account account : AccountsList) 
+		{
 			hashtable.put(account.getAccountNumber(), account);
 		}
 
@@ -82,5 +105,61 @@ public class Main {
 		}
 
 	}
+	
+	//1.3.4 Creation of the flows array
+	private static ArrayList<Flow> LoadFlowsList(ArrayList<Account> AccountsList) {
+		ArrayList<Flow> res = null;
+		res.add(new Debit("a debit of 50€ from account n°1", 50, 1));
+		
+		for (int i = 1; i<(AccountsList.size()+1); i++ ) {
+		
+			if (AccountsList.get(i) instanceof CurrentAccount) 
+			{
+				res.add(new Credit("a credit of 100.50€ on all current accounts in the array of accounts", 100.50, i));
+			}
+			
+			else if (AccountsList.get(i) instanceof SavingsAccount) 
+			{
+				res.add(new Credit("a credit of 1500€ on all current accounts in the array of accounts", 1500, i));
+			}
+		}
+		
+		res.add(new Transfert("A transfer of 50€ from account n1 to account n2", 50, 2, 1));
+		
+		
+		return res;
+		
+	}
+	
+	//Update accounts
+	private static HashMap<Integer, Account> updateAccounts(HashMap<Integer, Account> hashAccount, ArrayList FlowsList){
+		for (int i = 0; i< FlowsList.size(); i++ ) {
+			Flow CurrentElement = (Flow) FlowsList.get(i);
+			Account account = hashAccount.get(CurrentElement.getTargetAccountNumber());
+			account.setBalance(CurrentElement);
+			//checking that the account doesn't have a balance below 0
+			if (account.getBalance()<0) {
+				System.out.println("Account number " + i + " got his balance below 0");
+			}
+			
+			hashAccount.put(account.getAccountNumber(), account);
+			
+			if (CurrentElement instanceof Transfert) 
+			{
+				Transfert trans = (Transfert) CurrentElement;
+				Account SourceAccount = hashAccount.get(trans.getSourceAccount());
+				SourceAccount.setBalance(trans);
+				
+				//checking that the sending account isn't now with a balance below 0
+				if (SourceAccount.getBalance()<0) {
+					System.out.println("Account number " + SourceAccount.getAccountNumber() + " got his balance below 0");
+				}
+				hashAccount.put(SourceAccount.getAccountNumber(), SourceAccount);
+			}
+		}
+		
+		return hashAccount;
+	}
+	
 
 }
