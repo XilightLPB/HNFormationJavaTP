@@ -3,7 +3,7 @@ package components;
 
 public class CurrentAccount extends Account {
 
-	protected CurrentAccount(String label, Client client) {
+	public CurrentAccount(String label, Client client) {
 		super(label, client);
 		
 	}
