@@ -5,7 +5,7 @@ public class SavingAccount extends Account {
 
 	protected SavingAccount(String label, Client client) {
 		super(label, client);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 }

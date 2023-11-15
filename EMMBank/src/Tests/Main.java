@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import components.Client;
 
 
-public class MainTest {
+public class Main {
 	
 	public static void main(String[] args) {
 		//1.1.2 Creation of Main class for tests
