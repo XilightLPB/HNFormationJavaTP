@@ -35,8 +35,10 @@ public class Account {
 	}
 	
 	//here I will make modification later
-	public void setBalance(int Amount) {
-		this.balance = Amount;
+	public void setBalance(Flow flow) {
+		double Amount = flow.getAmount();
+		this.balance += Amount;
+		
 	}
 	
 	public void setAccountNumber(int NewNumber) {
