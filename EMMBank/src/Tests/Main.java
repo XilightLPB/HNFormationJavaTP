@@ -43,7 +43,7 @@ public class Main {
 		//1.3.1 Creation of Hashtable
 		HashMap<Integer, Account> hashAccount = generateHashAccount(AccountsList);
 		//displaySortedHash(hashAccount);
-		
+		//The method sorted(Comparator<? super Map.Entry<Integer,Account>>) in the type Stream<Map.Entry<Integer,Account>> is not applicable for the arguments (Comparator<Map.Entry<Object,Comparable<? super Comparable<? super V>>>>)
 		
 		//1.3.4 Creation of the flow array
 		ArrayList<Flow> FlowsList = new ArrayList<Flow>();
