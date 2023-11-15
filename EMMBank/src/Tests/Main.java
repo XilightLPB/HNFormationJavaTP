@@ -1,4 +1,7 @@
 package Tests;
+import java.io.File;
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +75,7 @@ public class Main {
 
 	
 	private static void displaySortedHash(HashMap<Integer, Account> hashAccount) {
-		List<Entry<Integer, Account>> sorted = hashAccount.entrySet().stream().sort(Map.Entry.comparingByValue()).toList();
+		List<Entry<Integer, Account>> sorted = hashAccount.entrySet().stream().sorted(Map.Entry.comparingByValue()).toList();
 
 		for (Entry<Integer, Account> entry : sorted) {
 			System.out.println(entry.getValue());
