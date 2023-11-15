@@ -7,12 +7,14 @@ import components.Client;
 public class MainTest {
 	
 	public static void main(String[] args) {
+		//1.1.2 Creation of Main class for tests
 		int HowManyClients = 5;
 		ArrayList<Client> ClientsList = CreateClientsList(HowManyClients);
 		DisplayClients(ClientsList);
 	}
 	
 	
+	//1.1.2 Creation of Main class for tests
 	private static ArrayList<Client> CreateClientsList(int HowMany){
 		ArrayList<Client> res = new ArrayList<Client>();
 		
