@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,7 +111,6 @@ public class Main {
 		AccountsList.forEach(System.out::println);
 	}
 	
-	
 	//1.3.1 Managing of Hashtable and printing them, sorted by balance's value
 	private static HashMap<Integer, Account> generateHashAccount(ArrayList<Account> AccountsList) {
 		HashMap<Integer, Account> hashtable = new HashMap<>();
@@ -124,7 +125,8 @@ public class Main {
 
 	
 	private static void displaySortedHash(HashMap<Integer, Account> hashAccount) {
-		List<Entry<Integer, Account>> sorted = hashAccount.entrySet().stream().sorted().toList();
+		List<Entry<Integer, Account>> sorted = hashAccount.entrySet().stream().sorted(Comparator.comparingDouble(Map.Entry::getKey))
+				.toList();
 
 		for (Entry<Integer, Account> entry : sorted) {
 			System.out.println(entry.getValue());
