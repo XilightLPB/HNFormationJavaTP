@@ -125,7 +125,8 @@ public class Main {
 
 	
 	private static void displaySortedHash(HashMap<Integer, Account> hashAccount) {
-		List<Entry<Integer, Account>> sorted = hashAccount.entrySet().stream().sorted(Comparator.comparingDouble(Map.Entry::getKey))
+		
+		List<Entry<Integer, Account>> sorted = hashAccount.entrySet().stream().sorted((a,b)->Double.compare(a.getValue().getBalance(), b.getValue().getBalance()))
 				.toList();
 
 		for (Entry<Integer, Account> entry : sorted) {
