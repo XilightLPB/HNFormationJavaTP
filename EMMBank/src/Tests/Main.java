@@ -38,7 +38,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 public class Main {
 	
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
 		//1.1.2 Creation of Main class for tests
 		int HowManyClients = 5;
 		ArrayList<Client> ClientsList = CreateClientsList(HowManyClients);
@@ -51,7 +51,7 @@ public class Main {
 		
 		//1.3.1 Creation of Hashtable
 		HashMap<Integer, Account> hashAccount = generateHashAccount(AccountsList);
-		//displaySortedHash(hashAccount);
+		displaySortedHash(hashAccount);
 		//The method sorted(Comparator<? super Map.Entry<Integer,Account>>) in the type Stream<Map.Entry<Integer,Account>> is not applicable for the arguments (Comparator<Map.Entry<Object,Comparable<? super Comparable<? super V>>>>)
 		
 		//1.3.4 Creation of the flow array
@@ -60,11 +60,11 @@ public class Main {
 		
 		//1.3.5 Update accounts
 		updateAccounts(hashAccount,FlowsList);
-		//displaySortedHash(hashAccount);
+		displaySortedHash(hashAccount);
 		
 		//2.1 JSON file of flows
 		final String JSONpath = "../tests.json";
-		FlowsList2 = createFlowsFromJSON(JSONpath);
+		ArrayList<Flow> FlowsList2 = createFlowsFromJSON(JSONpath);
 		
 		//2.2 XML file to accounts
 		final String XMLpath = "../tests.xml";
@@ -124,7 +124,7 @@ public class Main {
 
 	
 	private static void displaySortedHash(HashMap<Integer, Account> hashAccount) {
-		List<Entry<Integer, Account>> sorted = hashAccount.entrySet().stream().sorted(Map.Entry.comparingByValue()).toList();
+		List<Entry<Integer, Account>> sorted = hashAccount.entrySet().stream().sorted().toList();
 
 		for (Entry<Integer, Account> entry : sorted) {
 			System.out.println(entry.getValue());
