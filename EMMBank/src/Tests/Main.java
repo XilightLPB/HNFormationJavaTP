@@ -1,29 +1,38 @@
 package Tests;
 import java.io.File;
 import java.io.IOException;
-
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-import com.fasterxml.jackson.*;
-
-
+import components.Account;
 import components.Client;
 import components.Credit;
-import components.Account;
-import components.SavingsAccount;
-import components.Transfert;
 import components.CurrentAccount;
 import components.Debit;
 import components.Flow;
+import components.SavingsAccount;
+import components.Transfert;
+
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 
 public class Main {
@@ -54,8 +63,12 @@ public class Main {
 		//displaySortedHash(hashAccount);
 		
 		//2.1 JSON file of flows
-		final String path = "../tests.json";
-		//FlowsList = generateFlowsFromJSON(path);
+		final String JSONpath = "../tests.json";
+		FlowsList2 = createFlowsFromJSON(JSONpath);
+		
+		//2.2 XML file to accounts
+		final String XMLpath = "../tests.xml";
+		ArrayList<Account> AccountsList2 = createAccountsFromXML(XMLpath);
 		
 	}
 	
@@ -176,7 +189,7 @@ public class Main {
 	
 	
 	//2.1 JSON file to flows
-	private static ArrayList<Flow> generateFlowsFromJSON(String path) throws IOException {
+	private static ArrayList<Flow> createFlowsFromJSON(String path) throws IOException {
 
 		// Get JSON file from path
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
@@ -184,11 +197,89 @@ public class Main {
 		
 		//Trying to fill the flow array from it
 		ArrayList <Flow> res = new ArrayList<Flow>();
-		System.out.print(json);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
+		res = mapper.readerForListOf(Flow.class).readValue(json);
 		
 		
 		
 		return res;
+	}
+	
+	
+	//2.2 XML to account
+	private static ArrayList<Account> createAccountsFromXML(String path)
+			throws ParserConfigurationException, SAXException, IOException 
+	{
+		ArrayList<Account> accounts = new ArrayList<>();
+
+		// Get the file
+		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		Document doc = builder.parse(new File(path));
+		doc.getDocumentElement().normalize();
+
+		
+		// List of the accounts to create
+		NodeList nodeList = doc.getElementsByTagName("account");
+		int n = nodeList.getLength();
+		Node current;
+		
+		// iterate over the list of accounts to creates and call the account and client creation function
+		for (int i = 0; i < n; i++) 
+		{
+			current = nodeList.item(i);
+			
+			if (current.getNodeType() == Node.ELEMENT_NODE && "account".equals(current.getNodeName())) 
+			{
+				Node type = current.getAttributes().getNamedItem("type");
+				accounts.add(createAccountFromNode(current, type.getNodeValue()));
+			}
+		}
+		return accounts;
+	}
+	
+	private static Account createAccountFromNode(Node node, String type) 
+	{	
+		NodeList nodeList = node.getChildNodes();
+		int n = nodeList.getLength();
+		Node current;
+		
+		
+		//Creation of the client
+		String label = null;
+		Client client = new Client(null, null);
+		for (int i = 0; i < n; i++) 
+		{
+			current = nodeList.item(i);
+			if (current.getNodeType() == Node.ELEMENT_NODE) 
+			{
+				if ("label" == (current.getNodeName())) 
+				{
+					label = current.getTextContent();
+				}
+				
+				else if ("name" == (current.getNodeName())) 
+				{
+					client.setName(current.getTextContent());
+				}
+				
+				else if ("firstname" == (current.getNodeName())) 
+				{
+					client.setFirstName(current.getTextContent());
+				}
+			}
+		}
+		
+		//Now create the account with the created client
+		if (type == "currentAccount") 
+		{
+			return new CurrentAccount(label, client);
+		}
+		else if (type == "savingsAccount"){
+			return new SavingsAccount(label, client);
+		}
+		throw new IllegalArgumentException("Unexpected value: " + type);
+		
 	}
 
 }

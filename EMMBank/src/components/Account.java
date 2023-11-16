@@ -1,6 +1,12 @@
 //1.2.1 Creation of the account class
 package components;
 
+//2.2 XML to file
+@XmlRootElement(name = "Account")
+@XmlType(propOrder = { "label", "client" })
+//end of XML to file
+
+
 public class Account {
 	protected String label;
 	protected double balance = 0;
@@ -30,6 +36,7 @@ public class Account {
 		return client;
 	}
 
+	@XmlAttribute(name = "label")
 	public void setLabel(String label) {
 		this.label = label;
 	}
@@ -67,8 +74,15 @@ public class Account {
 		this.accountNumber = NewNumber;
 	}
 	
+	@XmlAttribute(name = "client")
 	public void setClient(Client client) {
 		this.client = client;
+	}
+	
+	@Override
+	public String toString() {
+		
+		return "Compte N:" + this.accountNumber + "Solde: " + this.balance + " label: " + this.label;
 	}
 
 	
