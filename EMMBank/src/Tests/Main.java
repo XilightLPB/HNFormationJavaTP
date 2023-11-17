@@ -137,7 +137,7 @@ public class Main {
 	
 	//1.3.4 Creation of the flows array
 	private static ArrayList<Flow> LoadFlowsList(ArrayList<Account> AccountsList) {
-		ArrayList<Flow> res = null;
+		ArrayList<Flow> res = new ArrayList<Flow>();
 		res.add(new Debit("a debit of 50€ from account n°1", 50, 1));
 		
 		for (int i = 1; i<(AccountsList.size()+1); i++ ) {
